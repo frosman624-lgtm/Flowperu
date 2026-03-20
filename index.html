@@ -30,7 +30,7 @@
       overflow-x: hidden;
     }
 
-    /* ── PARTÍCULAS ── */
+    
     #particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
     .particle { position: absolute; border-radius: 50%; opacity: 0; animation: fp linear infinite; }
     @keyframes fp {
@@ -40,7 +40,7 @@
       100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
 
-    /* ── INTRO LIBRO ── */
+    
     #book-intro {
       position: fixed; inset: 0; z-index: 9999;
       perspective: 2200px;
@@ -98,7 +98,7 @@
     #book-intro.fade-out { animation: fadeOverlay .8s ease forwards; }
     @keyframes fadeOverlay { to { opacity: 0; pointer-events: none; } }
 
-    /* ── NAVBAR ── */
+    
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       display: flex; align-items: center; justify-content: space-between; padding: 16px 40px;
@@ -123,7 +123,7 @@
     .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(217,70,239,.6); }
     .menu-toggle { display: none; background: none; border: none; color: var(--magenta); font-size: 1.3rem; cursor: pointer; }
 
-    /* ── HERO ── */
+    
     #hero {
       position: relative; min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
@@ -244,7 +244,7 @@
     }
     @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(9px); } }
 
-    /* ── STATS ── */
+    
     .stats-bar {
       position: relative; z-index: 2;
       background: rgba(13,5,32,.96);
@@ -262,7 +262,7 @@
     }
     .stat-label { font-size: .7rem; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; }
 
-    /* ── SECCIONES ── */
+    
     section { position: relative; z-index: 2; padding: 90px 40px; }
     .sec-header { text-align: center; margin-bottom: 60px; opacity: 0; transform: translateY(30px); transition: opacity .7s, transform .7s; }
     .sec-header.visible { opacity: 1; transform: translateY(0); }
@@ -279,7 +279,7 @@
     }
     .sec-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--muted); font-style: italic; max-width: 480px; margin: 0 auto; }
 
-    /* ── VISIÓN / MISIÓN ── */
+    
     #vision-mision { background: var(--bg2); }
     .vm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 2px; max-width: 1100px; margin: 0 auto; }
     .vm-card {
@@ -297,7 +297,7 @@
     .vm-title { font-family: 'Cinzel', serif; font-size: clamp(1rem, 2.5vw, 1.35rem); color: #fff; margin-bottom: 18px; position: relative; z-index: 1; }
     .vm-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: rgba(240,232,255,.72); line-height: 1.9; position: relative; z-index: 1; }
 
-    /* ── QUIÉNES SOMOS ── */
+    
     #quienes-somos { background: var(--bg3); }
     .about-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     .about-visual { position: relative; opacity: 0; transform: translateX(-40px); transition: opacity .8s, transform .8s; }
@@ -322,7 +322,7 @@
     .about-feat i { color: var(--magenta); font-size: .95rem; width: 18px; text-align: center; }
     .about-feat span { font-size: .88rem; letter-spacing: 1px; color: var(--text); }
 
-    /* ── OWNER ── */
+    
     #owner { background: var(--bg2); position: relative; overflow: hidden; }
     #owner::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 700px; height: 700px; background: radial-gradient(ellipse, rgba(123,47,247,.09), transparent 70%); pointer-events: none; }
     .owner-card {
@@ -352,7 +352,7 @@
     .owner-row a { color: var(--purple-mid); text-decoration: none; transition: color .3s; }
     .owner-row a:hover { color: var(--magenta); }
 
-    /* ── VALORES ── */
+    
     #valores { background: var(--bg); }
     .vals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 2px; max-width: 1100px; margin: 0 auto; }
     .val-card {
@@ -369,7 +369,7 @@
     .val-name { font-family: 'Cinzel', serif; font-size: .95rem; color: #fff; letter-spacing: 2px; margin-bottom: 10px; position: relative; z-index: 1; }
     .val-desc { font-size: .83rem; color: var(--muted); line-height: 1.7; position: relative; z-index: 1; }
 
-    /* ── CONTACTO ── */
+    
     #contacto { background: var(--bg2); text-align: center; }
     .cta-box {
       max-width: 700px; margin: 0 auto; padding: 65px 40px;
@@ -389,7 +389,7 @@
     .btn-owner { background: linear-gradient(135deg, #0d6da8, #229ed9); color: #fff; padding: 14px 32px; font-family: 'Rajdhani', sans-serif; font-size: .88rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all .3s; box-shadow: 0 0 20px rgba(34,158,217,.3); border-radius: 2px; }
     .btn-owner:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(34,158,217,.5); }
 
-    /* ── FOOTER ── */
+    
     footer {
       position: relative; z-index: 2; background: var(--bg);
       border-top: 1px solid rgba(157,78,255,.12);
@@ -401,8 +401,16 @@
     .foot-social { display: flex; gap: 12px; }
     .foot-social a { width: 36px; height: 36px; border: 1px solid rgba(157,78,255,.2); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .85rem; text-decoration: none; transition: all .3s; }
     .foot-social a:hover { border-color: var(--magenta); color: var(--magenta); box-shadow: 0 0 14px rgba(217,70,239,.35); }
+    .dev-bar {
+      position: relative; z-index: 2;
+      background: var(--bg); border-top: 1px solid rgba(157,78,255,.07);
+      text-align: center; padding: 10px 20px;
+      font-size: .65rem; color: var(--muted); letter-spacing: 2px;
+    }
+    .dev-bar a { color: var(--purple-mid); text-decoration: none; transition: color .3s; }
+    .dev-bar a:hover { color: var(--magenta); }
 
-    /* ── RESPONSIVE ── */
+    
     @media (max-width: 768px) {
       nav { padding: 14px 20px; }
       .nav-links { display: none; }
@@ -440,7 +448,6 @@
 
 <div id="particles"></div>
 
-<!-- INTRO LIBRO -->
 <div id="book-intro">
   <div class="book">
     <div class="page-left">
@@ -466,7 +473,6 @@
   </div>
 </div>
 
-<!-- NAVBAR -->
 <nav id="navbar">
   <div class="nav-brand">FLOWPERU<span>Compra &amp; Vende con Confianza</span></div>
   <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
@@ -480,7 +486,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-mesh"></div>
   <div class="hero-grid"></div>
@@ -500,7 +505,6 @@
   <div class="hero-scroll"><i class="fas fa-chevron-down"></i><span>Scroll</span></div>
 </section>
 
-<!-- STATS -->
 <div class="stats-bar">
   <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">Confianza</div></div>
   <div class="stat-item" style="transition-delay:.1s"><div class="stat-number">24/7</div><div class="stat-label">Disponible</div></div>
@@ -508,7 +512,6 @@
   <div class="stat-item" style="transition-delay:.3s"><div class="stat-number">PERU</div><div class="stat-label">Origen</div></div>
 </div>
 
-<!-- VISIÓN & MISIÓN -->
 <section id="vision-mision">
   <div class="sec-header">
     <div class="sec-eyebrow">Nuestra Esencia</div>
@@ -537,7 +540,6 @@
   </div>
 </section>
 
-<!-- QUIÉNES SOMOS -->
 <section id="quienes-somos">
   <div class="sec-header">
     <div class="sec-eyebrow">FlowPeru</div>
@@ -569,7 +571,6 @@
   </div>
 </section>
 
-<!-- FUNDADOR -->
 <section id="owner">
   <div class="sec-header">
     <div class="sec-eyebrow">Liderazgo</div>
@@ -597,7 +598,6 @@
   </div>
 </section>
 
-<!-- VALORES -->
 <section id="valores">
   <div class="sec-header">
     <div class="sec-eyebrow">Nuestros Pilares</div>
@@ -614,7 +614,6 @@
   </div>
 </section>
 
-<!-- CONTACTO -->
 <section id="contacto">
   <div class="cta-box">
     <h2 class="cta-title">Únete a <span>FlowPeru</span></h2>
@@ -626,7 +625,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="foot-brand">FLOWPERU</div>
   <div class="foot-info">
@@ -638,9 +636,12 @@
     <a href="https://t.me/GabrielPE" target="_blank" title="Owner"><i class="fas fa-crown"></i></a>
   </div>
 </footer>
+<div class="dev-bar">
+  Desarrollado por <a href="https://t.me/Arenoficial" target="_blank">@Arenoficial</a>
+</div>
 
 <script>
-  // Partículas flotantes
+
   const container = document.getElementById('particles');
   const colors = ['#9d4eff', '#e040fb', '#7b2ff7', '#ff2d78', '#c084fc'];
   for (let i = 0; i < 55; i++) {
@@ -659,7 +660,6 @@
     container.appendChild(p);
   }
 
-  // Intro libro → mostrar web (5 segundos)
   setTimeout(() => {
     document.getElementById('book-intro').classList.add('fade-out');
     setTimeout(() => {
@@ -669,7 +669,6 @@
     }, 800);
   }, 5000);
 
-  // Menú móvil
   document.getElementById('menuToggle').addEventListener('click', () => {
     document.getElementById('navLinks').classList.toggle('open');
   });
@@ -677,7 +676,6 @@
     a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
   });
 
-  // Animaciones al hacer scroll
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: .1 });
