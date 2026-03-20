@@ -6,529 +6,211 @@
   <title>FLOWPERU | Compra y Vende con Confianza</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --purple:      #7b2ff7;
-      --purple-dark: #4a0fa8;
-      --purple-mid:  #9d4eff;
-      --magenta:     #e040fb;
-      --pink:        #ff2d78;
-      --bg:          #07020f;
-      --bg2:         #0d0520;
-      --bg3:         #110630;
-      --text:        #f0e8ff;
-      --muted:       #9980c4;
-      --card:        rgba(20,8,50,0.9);
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-    body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;}
-
-    /* ── PARTICLES ── */
-    #particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
-    .particle{position:absolute;border-radius:50%;opacity:0;animation:fp linear infinite;}
-    @keyframes fp{
-      0%  {transform:translateY(105vh) scale(0);opacity:0;}
-      10% {opacity:1;}
-      90% {opacity:.6;}
-      100%{transform:translateY(-10vh) scale(1.2);opacity:0;}
-    }
-
-    /* ── BOOK INTRO ── */
-    #book-intro{
-      position:fixed;inset:0;z-index:9999;perspective:2200px;
-      display:flex;align-items:center;justify-content:center;
-      background:radial-gradient(ellipse at center,#1a0535 0%,#07020f 100%);
-    }
-    .book{
-      position:relative;
-      width:min(720px,96vw);height:min(460px,68vh);
-      transform-style:preserve-3d;
-      filter:drop-shadow(0 0 60px rgba(123,47,247,.5));
-    }
-    .page-left{
-      position:absolute;top:0;left:0;width:50%;height:100%;
-      background:linear-gradient(135deg,#1a0535,#0d0220);
-      border:1px solid rgba(157,78,255,.35);border-right:none;border-radius:6px 0 0 6px;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;
-      transform-origin:right center;
-      animation:ol 1.5s cubic-bezier(.77,0,.18,1) 3.5s forwards;
-      overflow:hidden;
-    }
-    .page-left::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(123,47,247,.18),transparent 70%);}
-    @keyframes ol{0%{transform:rotateY(0)}100%{transform:rotateY(-145deg);opacity:0}}
-    .page-right{
-      position:absolute;top:0;right:0;width:50%;height:100%;
-      background:linear-gradient(135deg,#0d0220,#1a0535);
-      border:1px solid rgba(157,78,255,.35);border-left:none;border-radius:0 6px 6px 0;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;
-      transform-origin:left center;
-      animation:or 1.5s cubic-bezier(.77,0,.18,1) 3.5s forwards;
-      overflow:hidden;
-    }
-    .page-right::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(224,64,251,.12),transparent 70%);}
-    @keyframes or{0%{transform:rotateY(0)}100%{transform:rotateY(145deg);opacity:0}}
-    .spine{
-      position:absolute;top:0;left:calc(50% - 9px);width:18px;height:100%;
-      background:linear-gradient(to right,var(--purple-dark),var(--purple-mid),var(--purple-dark));
-      z-index:5;box-shadow:0 0 20px rgba(157,78,255,.6);
-    }
-    .book-logo{
-      font-family:'Cinzel',serif;font-size:clamp(1.4rem,5vw,2.3rem);font-weight:900;
-      background:linear-gradient(135deg,var(--purple-mid),var(--magenta));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      letter-spacing:4px;text-align:center;filter:drop-shadow(0 0 16px rgba(217,70,239,.7));
-    }
-    .book-div{width:70%;height:1px;background:linear-gradient(to right,transparent,var(--purple-mid),transparent);margin:13px 0;}
-    .book-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.8rem;color:var(--muted);text-align:center;letter-spacing:2px;position:relative;}
-    .book-img{width:88%;height:150px;object-fit:cover;border-radius:4px;border:1px solid rgba(157,78,255,.4);}
-    .book-row{display:flex;align-items:center;gap:10px;font-size:.75rem;color:var(--muted);width:100%;padding:5px 8px;position:relative;}
-    .book-row i{color:var(--magenta);}
-    #book-intro.fade-out{animation:fo .8s ease forwards;}
-    @keyframes fo{to{opacity:0;pointer-events:none;}}
-
-    /* ── NAV ── */
-    nav{
-      position:fixed;top:0;left:0;right:0;z-index:1000;
-      display:flex;align-items:center;justify-content:space-between;padding:16px 40px;
-      background:rgba(7,2,15,.9);border-bottom:1px solid rgba(157,78,255,.2);
-      backdrop-filter:blur(20px);opacity:0;transform:translateY(-20px);
-      transition:opacity .6s,transform .6s;
-    }
-    nav.visible{opacity:1;transform:translateY(0);}
-    .nav-brand{
-      font-family:'Cinzel',serif;font-size:1.35rem;font-weight:900;
-      background:linear-gradient(90deg,var(--purple-mid),var(--magenta));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      letter-spacing:3px;filter:drop-shadow(0 0 10px rgba(217,70,239,.5));
-    }
-    .nav-brand span{display:block;font-family:'Rajdhani',sans-serif;font-weight:300;font-size:.55rem;letter-spacing:4px;color:var(--muted);-webkit-text-fill-color:var(--muted);background:none;filter:none;}
-    .nav-links{display:flex;gap:28px;list-style:none;}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:2px;text-transform:uppercase;transition:color .3s;position:relative;}
-    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:linear-gradient(to right,var(--purple-mid),var(--magenta));transition:width .3s;}
-    .nav-links a:hover{color:var(--magenta);}
-    .nav-links a:hover::after{width:100%;}
-    .nav-cta{background:linear-gradient(135deg,var(--purple),var(--magenta));color:#fff;padding:8px 22px;font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s;box-shadow:0 0 16px rgba(123,47,247,.4);}
-    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(217,70,239,.6);}
-    .menu-toggle{display:none;background:none;border:none;color:var(--magenta);font-size:1.3rem;cursor:pointer;}
-
-    /* ── HERO ── */
-    #hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:2;}
-    .hero-bg{position:absolute;inset:0;background-image:url('https://i.ibb.co/39DYndWV/IMG-20260320-154537-540.jpg');background-size:cover;background-position:center top;filter:brightness(.22) saturate(1.5) hue-rotate(10deg);transform:scale(1.06);animation:zoom 18s ease-in-out infinite alternate;}
-    @media(max-width:768px){.hero-bg{background-size:cover;background-position:center center;transform:scale(1);animation:none;}}
-    @keyframes zoom{0%{transform:scale(1.06)}100%{transform:scale(1.13)}}
-    .hero-ov{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(123,47,247,.28),transparent 55%),radial-gradient(ellipse at 70% 60%,rgba(224,64,251,.18),transparent 55%),linear-gradient(to bottom,rgba(7,2,15,.2),rgba(7,2,15,.75));}
-    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(157,78,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(157,78,255,.06) 1px,transparent 1px);background-size:55px 55px;}
-    .hero-rays{position:absolute;inset:0;background:conic-gradient(from 270deg at 50% 50%,transparent 0deg,rgba(123,47,247,.04) 20deg,transparent 40deg,rgba(224,64,251,.04) 80deg,transparent 100deg,rgba(123,47,247,.03) 180deg,transparent 200deg);animation:rays 30s linear infinite;}
-    @keyframes rays{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-    .hero-content{position:relative;z-index:3;text-align:center;padding:20px;max-width:860px;opacity:0;transform:translateY(40px);transition:opacity .9s,transform .9s;}
-    .hero-content.visible{opacity:1;transform:translateY(0);}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(157,78,255,.45);padding:7px 20px;color:var(--purple-mid);font-size:.68rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:28px;background:rgba(123,47,247,.08);box-shadow:0 0 20px rgba(123,47,247,.12);}
-    .hero-title{font-family:'Cinzel',serif;font-size:clamp(2rem,8vw,5.5rem);font-weight:900;line-height:.9;letter-spacing:clamp(3px,2vw,10px);background:linear-gradient(135deg,#fff 20%,var(--purple-mid) 50%,var(--magenta) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(217,70,239,.5));margin-bottom:8px;}
-    .hero-title span{display:block;font-size:clamp(.7rem,3vw,1.6rem);letter-spacing:clamp(4px,2vw,16px);background:linear-gradient(135deg,var(--magenta),var(--purple-mid));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(224,64,251,.7));}
-    .hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,2vw,1.3rem);color:var(--muted);letter-spacing:5px;margin-bottom:20px;}
-    .hero-div{width:140px;height:1px;background:linear-gradient(to right,transparent,var(--purple-mid),var(--magenta),transparent);margin:24px auto;box-shadow:0 0 12px rgba(217,70,239,.4);}
-    .hero-desc{font-size:1rem;color:rgba(240,232,255,.65);line-height:1.9;max-width:520px;margin:0 auto 44px;letter-spacing:.5px;}
-    .hero-btns{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
-    .btn-p{background:linear-gradient(135deg,var(--purple-dark),var(--purple),var(--magenta));color:#fff;padding:14px 36px;font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;box-shadow:0 0 24px rgba(123,47,247,.45);position:relative;overflow:hidden;}
-    .btn-p::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(255,255,255,.12);transition:left .35s;}
-    .btn-p:hover::before{left:100%;}
-    .btn-p:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(217,70,239,.6);}
-    .btn-o{background:transparent;border:1px solid rgba(157,78,255,.5);color:var(--purple-mid);padding:14px 36px;font-family:'Rajdhani',sans-serif;font-size:.88rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;}
-    .btn-o:hover{border-color:var(--magenta);color:var(--magenta);transform:translateY(-2px);box-shadow:0 0 20px rgba(224,64,251,.25);}
-    .hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:.6rem;letter-spacing:4px;text-transform:uppercase;animation:bs 2.2s ease-in-out infinite;z-index:3;}
-    @keyframes bs{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(9px)}}
-
-    /* ── STATS ── */
-    .stats-bar{position:relative;z-index:2;background:rgba(13,5,32,.95);border-top:1px solid rgba(157,78,255,.18);border-bottom:1px solid rgba(157,78,255,.18);padding:28px 40px;display:flex;justify-content:center;gap:60px;flex-wrap:wrap;backdrop-filter:blur(10px);}
-    .stat-item{text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
-    .stat-item.visible{opacity:1;transform:translateY(0);}
-    .stat-n{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(217,70,239,.5));}
-    .stat-l{font-size:.7rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:4px;}
-
-    /* ── SECTIONS ── */
-    section{position:relative;z-index:2;padding:100px 40px;}
-    .sec-hdr{text-align:center;margin-bottom:65px;opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s;}
-    .sec-hdr.visible{opacity:1;transform:translateY(0);}
-    .sec-eye{font-size:.68rem;color:var(--magenta);letter-spacing:6px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:12px;}
-    .sec-eye::before,.sec-eye::after{content:'';width:40px;height:1px;background:var(--magenta);opacity:.6;}
-    .sec-title{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3.5vw,2.8rem);font-weight:700;background:linear-gradient(135deg,#fff 30%,var(--purple-mid) 70%,var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;margin-bottom:14px;}
-    .sec-desc{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:480px;margin:0 auto;}
-
-    /* ── VISION/MISION ── */
-    #vision-mision{background:var(--bg2);}
-    .vm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:2px;max-width:1100px;margin:0 auto;}
-    .vm-card{background:var(--card);padding:46px 36px;position:relative;overflow:hidden;border:1px solid rgba(157,78,255,.1);opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s;}
-    .vm-card.visible{opacity:1;transform:translateY(0);}
-    .vm-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(to right,var(--purple-dark),var(--magenta));transform:scaleX(0);transform-origin:left;transition:transform .5s;}
-    .vm-card:hover::before{transform:scaleX(1);}
-    .vm-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(157,78,255,.07),transparent 70%);opacity:0;transition:opacity .5s;}
-    .vm-card:hover::after{opacity:1;}
-    .vm-icon{width:58px;height:58px;border:1px solid rgba(157,78,255,.4);display:flex;align-items:center;justify-content:center;margin-bottom:22px;font-size:1.4rem;color:var(--magenta);position:relative;z-index:1;box-shadow:0 0 18px rgba(217,70,239,.2);transition:box-shadow .3s;}
-    .vm-card:hover .vm-icon{box-shadow:0 0 28px rgba(217,70,239,.45);}
-    .vm-label{font-size:.62rem;color:var(--magenta);letter-spacing:5px;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1;}
-    .vm-title{font-family:'Cinzel',serif;font-size:clamp(1rem,2.5vw,1.35rem);color:#fff;margin-bottom:18px;position:relative;z-index:1;}
-    .vm-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(240,232,255,.72);line-height:1.9;position:relative;z-index:1;}
-
-    /* ── QUIENES SOMOS ── */
-    #quienes-somos{background:var(--bg3);}
-    .about-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-    .about-vis{position:relative;opacity:0;transform:translateX(-40px);transition:opacity .8s,transform .8s;}
-    .about-vis.visible{opacity:1;transform:translateX(0);}
-    .about-frame{position:relative;width:100%;padding-top:100%;overflow:visible;}
-    .about-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2px;filter:saturate(1.15) brightness(.95);}
-    .about-glow{position:absolute;inset:-2px;background:linear-gradient(135deg,var(--purple),var(--magenta),var(--purple));border-radius:4px;z-index:-1;opacity:.6;animation:bg 3s ease-in-out infinite alternate;}
-    @keyframes bg{0%{opacity:.4;box-shadow:0 0 20px rgba(123,47,247,.4)}100%{opacity:.7;box-shadow:0 0 40px rgba(217,70,239,.6)}}
-    .about-deco{position:absolute;top:-14px;right:-14px;width:50px;height:50px;border-top:2px solid var(--magenta);border-right:2px solid var(--magenta);box-shadow:4px -4px 16px rgba(217,70,239,.35);}
-    .about-deco2{position:absolute;bottom:-14px;left:-14px;width:50px;height:50px;border-bottom:2px solid var(--purple-mid);border-left:2px solid var(--purple-mid);box-shadow:-4px 4px 16px rgba(157,78,255,.35);}
-    .about-badge{position:absolute;bottom:-18px;right:-18px;background:linear-gradient(135deg,var(--purple-dark),var(--magenta));color:#fff;padding:14px 18px;text-align:center;z-index:2;box-shadow:0 0 24px rgba(217,70,239,.5);}
-    .about-badge-n{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;display:block;}
-    .about-badge-t{font-size:.55rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;}
-    .about-txt{opacity:0;transform:translateX(40px);transition:opacity .8s,transform .8s;}
-    .about-txt.visible{opacity:1;transform:translateX(0);}
-    .about-eye{font-size:.68rem;color:var(--magenta);letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;}
-    .about-tit{font-family:'Cinzel',serif;font-size:clamp(1.3rem,3vw,2rem);font-weight:700;color:#fff;margin-bottom:20px;line-height:1.2;}
-    .about-body{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:rgba(240,232,255,.75);line-height:2;margin-bottom:28px;}
-    .about-feats{display:flex;flex-direction:column;gap:12px;}
-    .about-feat{display:flex;align-items:center;gap:14px;padding:12px 16px;background:rgba(123,47,247,.06);border-left:2px solid var(--purple-mid);transition:background .3s,border-color .3s,box-shadow .3s;}
-    .about-feat:hover{background:rgba(157,78,255,.12);border-color:var(--magenta);box-shadow:inset 0 0 20px rgba(217,70,239,.05);}
-    .about-feat i{color:var(--magenta);font-size:.95rem;width:18px;text-align:center;}
-    .about-feat span{font-size:.88rem;letter-spacing:1px;color:var(--text);}
-
-    /* ── OWNER ── */
-    #owner{background:var(--bg2);position:relative;overflow:hidden;}
-    #owner::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(ellipse,rgba(123,47,247,.09),transparent 70%);pointer-events:none;}
-    .owner-card{max-width:720px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;padding:50px;background:var(--card);border:1px solid rgba(157,78,255,.18);position:relative;opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s;box-shadow:0 0 60px rgba(123,47,247,.08);}
-    .owner-card.visible{opacity:1;transform:translateY(0);}
-    .owner-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--purple-dark),var(--magenta),var(--purple-dark));box-shadow:0 0 12px rgba(217,70,239,.5);}
-    .owner-imgw{position:relative;width:160px;height:160px;flex-shrink:0;}
-    .owner-img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid rgba(157,78,255,.5);position:relative;z-index:1;filter:saturate(1.1);}
-    .owner-ring{position:absolute;inset:-10px;border-radius:50%;border:1px dashed rgba(157,78,255,.4);animation:rs 10s linear infinite;}
-    .owner-ring::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;background:var(--magenta);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 10px rgba(217,70,239,.8);}
-    @keyframes rs{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-    .owner-ring2{position:absolute;inset:-22px;border-radius:50%;border:1px solid rgba(123,47,247,.15);}
-    .owner-glow{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at center,rgba(157,78,255,.2),transparent 70%);animation:gp 3s ease-in-out infinite alternate;}
-    @keyframes gp{0%{opacity:.5}100%{opacity:1}}
-    .owner-crown{position:absolute;top:-20px;left:50%;transform:translateX(-50%);color:var(--magenta);font-size:1.2rem;filter:drop-shadow(0 0 8px rgba(217,70,239,.8));z-index:2;}
-    .owner-role{font-size:.62rem;color:var(--magenta);letter-spacing:5px;text-transform:uppercase;margin-bottom:10px;}
-    .owner-name{font-family:'Cinzel',serif;font-size:clamp(1rem,2.5vw,1.35rem);font-weight:700;color:#fff;margin-bottom:18px;line-height:1.4;}
-    .owner-name span{background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1rem;display:block;}
-    .owner-info{display:flex;flex-direction:column;gap:10px;}
-    .owner-row{display:flex;align-items:center;gap:12px;font-size:.84rem;color:var(--muted);}
-    .owner-row i{color:var(--purple-mid);width:16px;text-align:center;}
-    .owner-row a{color:var(--purple-mid);text-decoration:none;transition:color .3s;}
-    .owner-row a:hover{color:var(--magenta);}
-
-    /* ── VALUES ── */
-    #valores{background:var(--bg);}
-    .vals-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px;max-width:1100px;margin:0 auto;}
-    .val-card{background:var(--card);padding:38px 26px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(157,78,255,.08);opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
-    .val-card.visible{opacity:1;transform:translateY(0);}
-    .val-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(123,47,247,.08),transparent 60%);opacity:0;transition:opacity .4s;}
-    .val-card:hover::after{opacity:1;}
-    .val-card:hover{border-color:rgba(157,78,255,.25);}
-    .val-icon{width:68px;height:68px;border:1px solid rgba(157,78,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.45rem;color:var(--magenta);position:relative;z-index:1;transition:all .3s;box-shadow:0 0 16px rgba(217,70,239,.15);}
-    .val-card:hover .val-icon{border-color:var(--magenta);transform:scale(1.1) rotate(-5deg);box-shadow:0 0 28px rgba(217,70,239,.4);}
-    .val-name{font-family:'Cinzel',serif;font-size:.95rem;color:#fff;letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;}
-    .val-desc{font-size:.83rem;color:var(--muted);line-height:1.7;position:relative;z-index:1;}
-
-    /* ── CONTACTO ── */
-    #contacto{background:var(--bg2);text-align:center;}
-    .cta-box{max-width:700px;margin:0 auto;padding:65px 40px;border:1px solid rgba(157,78,255,.2);position:relative;overflow:hidden;opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s;background:var(--card);box-shadow:0 0 80px rgba(123,47,247,.1);}
-    .cta-box.visible{opacity:1;transform:translateY(0);}
-    .cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(157,78,255,.1),transparent 70%);}
-    .cta-box::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--purple-mid),var(--magenta),transparent);box-shadow:0 0 16px rgba(217,70,239,.5);}
-    .cta-title{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3.5vw,2.6rem);font-weight:700;color:#fff;margin-bottom:14px;position:relative;}
-    .cta-title span{background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 14px rgba(217,70,239,.5));}
-    .cta-desc{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--muted);font-style:italic;margin-bottom:38px;position:relative;}
-    .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;}
-    .btn-tg{background:linear-gradient(135deg,var(--purple-dark),var(--purple),var(--magenta));color:#fff;padding:14px 32px;font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;box-shadow:0 0 20px rgba(123,47,247,.35);}
-    .btn-tg:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(217,70,239,.55);}
-    .btn-ow{background:linear-gradient(135deg,#0d6da8,#229ed9);color:#fff;padding:14px 32px;font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;box-shadow:0 0 20px rgba(34,158,217,.3);}
-    .btn-ow:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(34,158,217,.5);}
-
-    /* ── FOOTER ── */
-    footer{position:relative;z-index:2;background:var(--bg);border-top:1px solid rgba(157,78,255,.12);padding:38px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
-    .foot-brand{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;filter:drop-shadow(0 0 8px rgba(217,70,239,.4));}
-    .foot-info{font-size:.72rem;color:var(--muted);letter-spacing:1px;text-align:center;line-height:1.8;}
-    .foot-info a{color:var(--purple-mid);text-decoration:none;}
-    .foot-soc{display:flex;gap:12px;}
-    .foot-soc a{width:36px;height:36px;border:1px solid rgba(157,78,255,.2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem;text-decoration:none;transition:all .3s;}
-    .foot-soc a:hover{border-color:var(--magenta);color:var(--magenta);box-shadow:0 0 14px rgba(217,70,239,.35);}
-
-    /* ── RESPONSIVE ── */
-    @media(max-width:768px){
-      nav{padding:14px 20px;}
-      .nav-links{display:none;}
-      .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(7,2,15,.97);padding:20px;gap:18px;border-bottom:1px solid rgba(157,78,255,.15);}
-      .menu-toggle{display:block;}
-      section{padding:50px 16px;}
-      .stats-bar{gap:20px;padding:22px 16px;}
-      .about-wrap{grid-template-columns:1fr;}
-      .owner-card{grid-template-columns:1fr;text-align:center;gap:24px;padding:28px 18px;}
-      .owner-imgw{width:110px;height:110px;margin:0 auto;}
-      footer{padding:24px 16px;flex-direction:column;text-align:center;}
-      .book{height:min(420px,72vh);}
-      .book-img{height:110px;}
-      .vm-card{padding:30px 22px;}
-      .val-card{padding:28px 18px;}
-      .val-icon{width:54px;height:54px;font-size:1.2rem;}
-      .cta-box{padding:40px 20px;}
-      .btn-p,.btn-o,.btn-tg,.btn-ow{padding:12px 22px;font-size:.8rem;letter-spacing:1.5px;}
-      .hero-badge{font-size:.58rem;letter-spacing:2px;padding:6px 14px;}
-      .hero-div{width:90px;}
-      .hero-desc{font-size:.9rem;}
-      .sec-eye{font-size:.6rem;letter-spacing:4px;}
-      .sec-eye::before,.sec-eye::after{width:24px;}
-      .vm-text,.about-body,.cta-desc{font-size:.95rem;}
-      .about-frame{padding-top:80%;}
-    }
-    @media(max-width:400px){
-      .hero-title{letter-spacing:2px;}
-      .hero-sub{letter-spacing:2px;font-size:.85rem;}
-      section{padding:40px 14px;}
-    }
-  </style>
+  <style>:root { --purple: #7b2ff7; --purple-dark: #4a0fa8; --purple-mid: #9d4eff; --magenta: #e040fb; --pink: #ff2d78; --bg: #07020f; --bg2: #0d0520; --bg3: #110630; --text: #f0e8ff; --muted: #9980c4; --card: rgba(20,8,50,0.9); } *{margin:0;padding:0;box-sizing:border-box;} html{scroll-behavior:smooth;} body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;} #particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;} ._a2{position:absolute;border-radius:50%;opacity:0;animation:fp linear infinite;} @keyframes fp{ 0% {transform:translateY(105vh) scale(0);opacity:0;} 10% {opacity:1;} 90% {opacity:.6;} 100%{transform:translateY(-10vh) scale(1.2);opacity:0;} } #book-intro{ position:fixed;inset:0;z-index:9999;perspective:2200px; display:flex;align-items:center;justify-content:center; background:radial-gradient(ellipse at center,#1a0535 0%,#07020f 100%); } ._a4{ position:relative; width:min(720px,96vw);height:min(460px,68vh); transform-style:preserve-3d; filter:drop-shadow(0 0 60px rgba(123,47,247,.5)); } ._a5{ position:absolute;top:0;left:0;width:50%;height:100%; background:linear-gradient(135deg,#1a0535,#0d0220); border:1px solid rgba(157,78,255,.35);border-right:none;border-radius:6px 0 0 6px; display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px; transform-origin:right center; animation:ol 1.5s cubic-bezier(.77,0,.18,1) 3.5s forwards; overflow:hidden; } ._a5::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(123,47,247,.18),transparent 70%);} @keyframes ol{0%{transform:rotateY(0)}100%{transform:rotateY(-145deg);opacity:0}} ._a6{ position:absolute;top:0;right:0;width:50%;height:100%; background:linear-gradient(135deg,#0d0220,#1a0535); border:1px solid rgba(157,78,255,.35);border-left:none;border-radius:0 6px 6px 0; display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px; transform-origin:left center; animation:or 1.5s cubic-bezier(.77,0,.18,1) 3.5s forwards; overflow:hidden; } ._a6::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(224,64,251,.12),transparent 70%);} @keyframes or{0%{transform:rotateY(0)}100%{transform:rotateY(145deg);opacity:0}} ._a7{ position:absolute;top:0;left:calc(50% - 9px);width:18px;height:100%; background:linear-gradient(to right,var(--purple-dark),var(--purple-mid),var(--purple-dark)); z-index:5;box-shadow:0 0 20px rgba(157,78,255,.6); } ._a8{ font-family:'Cinzel',serif;font-size:clamp(1.4rem,5vw,2.3rem);font-weight:900; background:linear-gradient(135deg,var(--purple-mid),var(--magenta)); -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; letter-spacing:4px;text-align:center;filter:drop-shadow(0 0 16px rgba(217,70,239,.7)); } ._a9{width:70%;height:1px;background:linear-gradient(to right,transparent,var(--purple-mid),transparent);margin:13px 0;} ._b1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.8rem;color:var(--muted);text-align:center;letter-spacing:2px;position:relative;} ._b2{width:88%;height:150px;object-fit:cover;border-radius:4px;border:1px solid rgba(157,78,255,.4);} ._b3{display:flex;align-items:center;gap:10px;font-size:.75rem;color:var(--muted);width:100%;padding:5px 8px;position:relative;} ._b3 i{color:var(--magenta);} #book-intro._b4{animation:fo .8s ease forwards;} @keyframes fo{to{opacity:0;pointer-events:none;}} nav{ position:fixed;top:0;left:0;right:0;z-index:1000; display:flex;align-items:center;justify-content:space-between;padding:16px 40px; background:rgba(7,2,15,.9);border-bottom:1px solid rgba(157,78,255,.2); backdrop-filter:blur(20px);opacity:0;transform:translateY(-20px); transition:opacity .6s,transform .6s; } nav._j6{opacity:1;transform:translateY(0);} ._b6{ font-family:'Cinzel',serif;font-size:1.35rem;font-weight:900; background:linear-gradient(90deg,var(--purple-mid),var(--magenta)); -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text; letter-spacing:3px;filter:drop-shadow(0 0 10px rgba(217,70,239,.5)); } ._b6 span{display:block;font-family:'Rajdhani',sans-serif;font-weight:300;font-size:.55rem;letter-spacing:4px;color:var(--muted);-webkit-text-fill-color:var(--muted);background:none;filter:none;} ._b7{display:flex;gap:28px;list-style:none;} ._b7 a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:2px;text-transform:uppercase;transition:color .3s;position:relative;} ._b7 a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:linear-gradient(to right,var(--purple-mid),var(--magenta));transition:width .3s;} ._b7 a:hover{color:var(--magenta);} ._b7 a:hover::after{width:100%;} ._b8{background:linear-gradient(135deg,var(--purple),var(--magenta));color:#fff;padding:8px 22px;font-family:'Rajdhani',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:all .3s;box-shadow:0 0 16px rgba(123,47,247,.4);} ._b8:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(217,70,239,.6);} ._b5{display:none;background:none;border:none;color:var(--magenta);font-size:1.3rem;cursor:pointer;} #hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;z-index:2;} ._b9{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(123,47,247,.18) 0%,rgba(7,2,15,0) 70%);} ._c1{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(123,47,247,.28),transparent 55%),radial-gradient(ellipse at 70% 60%,rgba(224,64,251,.18),transparent 55%),linear-gradient(to bottom,rgba(7,2,15,.2),rgba(7,2,15,.75));} ._c2{position:absolute;inset:0;background-image:linear-gradient(rgba(157,78,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(157,78,255,.06) 1px,transparent 1px);background-size:55px 55px;} ._c3{position:absolute;inset:0;background:conic-gradient(from 270deg at 50% 50%,transparent 0deg,rgba(123,47,247,.04) 20deg,transparent 40deg,rgba(224,64,251,.04) 80deg,transparent 100deg,rgba(123,47,247,.03) 180deg,transparent 200deg);animation:rays 30s linear infinite;} @keyframes rays{from{transform:rotate(0)}to{transform:rotate(360deg)}} ._c4{position:relative;z-index:3;text-align:center;padding:20px;max-width:860px;opacity:0;transform:translateY(40px);transition:opacity .9s,transform .9s;} .hero-content._j6{opacity:1;transform:translateY(0);} ._c5{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(157,78,255,.45);padding:7px 20px;color:var(--purple-mid);font-size:.68rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:28px;background:rgba(123,47,247,.08);box-shadow:0 0 20px rgba(123,47,247,.12);} ._c6{font-family:'Cinzel',serif;font-size:clamp(2rem,8vw,5.5rem);font-weight:900;line-height:.9;letter-spacing:clamp(3px,2vw,10px);background:linear-gradient(135deg,#fff 20%,var(--purple-mid) 50%,var(--magenta) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(217,70,239,.5));margin-bottom:8px;} ._c6 span{display:block;font-size:clamp(.7rem,3vw,1.6rem);letter-spacing:clamp(4px,2vw,16px);background:linear-gradient(135deg,var(--magenta),var(--purple-mid));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(224,64,251,.7));} ._c7{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,2vw,1.3rem);color:var(--muted);letter-spacing:5px;margin-bottom:20px;} ._c8{width:140px;height:1px;background:linear-gradient(to right,transparent,var(--purple-mid),var(--magenta),transparent);margin:24px auto;box-shadow:0 0 12px rgba(217,70,239,.4);} ._c9{font-size:1rem;color:rgba(240,232,255,.65);line-height:1.9;max-width:520px;margin:0 auto 44px;letter-spacing:.5px;} ._d1{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;} ._j1{background:linear-gradient(135deg,var(--purple-dark),var(--purple),var(--magenta));color:#fff;padding:14px 36px;font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;box-shadow:0 0 24px rgba(123,47,247,.45);position:relative;overflow:hidden;} ._j1::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:rgba(255,255,255,.12);transition:left .35s;} ._j1:hover::before{left:100%;} ._j1:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(217,70,239,.6);} ._j2{background:transparent;border:1px solid rgba(157,78,255,.5);color:var(--purple-mid);padding:14px 36px;font-family:'Rajdhani',sans-serif;font-size:.88rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;} ._j2:hover{border-color:var(--magenta);color:var(--magenta);transform:translateY(-2px);box-shadow:0 0 20px rgba(224,64,251,.25);} ._d2{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:.6rem;letter-spacing:4px;text-transform:uppercase;animation:bs 2.2s ease-in-out infinite;z-index:3;} @keyframes bs{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(9px)}} ._d3{position:relative;z-index:2;background:rgba(13,5,32,.95);border-top:1px solid rgba(157,78,255,.18);border-bottom:1px solid rgba(157,78,255,.18);padding:28px 40px;display:flex;justify-content:center;gap:60px;flex-wrap:wrap;backdrop-filter:blur(10px);} ._d4{text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;} .stat-item._j6{opacity:1;transform:translateY(0);} ._d5{font-family:'Cinzel',serif;font-size:clamp(1.3rem,4vw,2rem);font-weight:700;background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 10px rgba(217,70,239,.5));} ._d6{font-size:.7rem;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:4px;} section{position:relative;z-index:2;padding:100px 40px;} ._d7{text-align:center;margin-bottom:65px;opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s;} .sec-hdr._j6{opacity:1;transform:translateY(0);} ._d8{font-size:.68rem;color:var(--magenta);letter-spacing:6px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:12px;} ._d8::before,._d8::after{content:'';width:40px;height:1px;background:var(--magenta);opacity:.6;} ._d9{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3.5vw,2.8rem);font-weight:700;background:linear-gradient(135deg,#fff 30%,var(--purple-mid) 70%,var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;margin-bottom:14px;} ._e1{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--muted);font-style:italic;max-width:480px;margin:0 auto;} #vision-mision{background:var(--bg2);} ._e2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:2px;max-width:1100px;margin:0 auto;} ._e3{background:var(--card);padding:46px 36px;position:relative;overflow:hidden;border:1px solid rgba(157,78,255,.1);opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s;} .vm-card._j6{opacity:1;transform:translateY(0);} ._e3::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(to right,var(--purple-dark),var(--magenta));transform:scaleX(0);transform-origin:left;transition:transform .5s;} ._e3:hover::before{transform:scaleX(1);} ._e3::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(157,78,255,.07),transparent 70%);opacity:0;transition:opacity .5s;} ._e3:hover::after{opacity:1;} ._e4{width:58px;height:58px;border:1px solid rgba(157,78,255,.4);display:flex;align-items:center;justify-content:center;margin-bottom:22px;font-size:1.4rem;color:var(--magenta);position:relative;z-index:1;box-shadow:0 0 18px rgba(217,70,239,.2);transition:box-shadow .3s;} ._e3:hover ._e4{box-shadow:0 0 28px rgba(217,70,239,.45);} ._e5{font-size:.62rem;color:var(--magenta);letter-spacing:5px;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1;} ._e6{font-family:'Cinzel',serif;font-size:clamp(1rem,2.5vw,1.35rem);color:#fff;margin-bottom:18px;position:relative;z-index:1;} ._e7{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:rgba(240,232,255,.72);line-height:1.9;position:relative;z-index:1;} #quienes-somos{background:var(--bg3);} ._e8{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;} ._e9{position:relative;opacity:0;transform:translateX(-40px);transition:opacity .8s,transform .8s;} .about-vis._j6{opacity:1;transform:translateX(0);} ._f1{position:relative;width:100%;padding-top:100%;overflow:visible;} ._f2{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2px;filter:saturate(1.15) brightness(.95);} ._f3{position:absolute;inset:-2px;background:linear-gradient(135deg,var(--purple),var(--magenta),var(--purple));border-radius:4px;z-index:-1;opacity:.6;animation:bg 3s ease-in-out infinite alternate;} @keyframes bg{0%{opacity:.4;box-shadow:0 0 20px rgba(123,47,247,.4)}100%{opacity:.7;box-shadow:0 0 40px rgba(217,70,239,.6)}} ._f4{position:absolute;top:-14px;right:-14px;width:50px;height:50px;border-top:2px solid var(--magenta);border-right:2px solid var(--magenta);box-shadow:4px -4px 16px rgba(217,70,239,.35);} ._f5{position:absolute;bottom:-14px;left:-14px;width:50px;height:50px;border-bottom:2px solid var(--purple-mid);border-left:2px solid var(--purple-mid);box-shadow:-4px 4px 16px rgba(157,78,255,.35);} ._f6{position:absolute;bottom:-18px;right:-18px;background:linear-gradient(135deg,var(--purple-dark),var(--magenta));color:#fff;padding:14px 18px;text-align:center;z-index:2;box-shadow:0 0 24px rgba(217,70,239,.5);} ._f7{font-family:'Cinzel',serif;font-size:1.7rem;font-weight:900;display:block;} ._f8{font-size:.55rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;} ._f9{opacity:0;transform:translateX(40px);transition:opacity .8s,transform .8s;} .about-txt._j6{opacity:1;transform:translateX(0);} ._g1{font-size:.68rem;color:var(--magenta);letter-spacing:5px;text-transform:uppercase;margin-bottom:14px;} ._g2{font-family:'Cinzel',serif;font-size:clamp(1.3rem,3vw,2rem);font-weight:700;color:#fff;margin-bottom:20px;line-height:1.2;} ._g3{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:rgba(240,232,255,.75);line-height:2;margin-bottom:28px;} ._g4{display:flex;flex-direction:column;gap:12px;} ._g5{display:flex;align-items:center;gap:14px;padding:12px 16px;background:rgba(123,47,247,.06);border-left:2px solid var(--purple-mid);transition:background .3s,border-color .3s,box-shadow .3s;} ._g5:hover{background:rgba(157,78,255,.12);border-color:var(--magenta);box-shadow:inset 0 0 20px rgba(217,70,239,.05);} ._g5 i{color:var(--magenta);font-size:.95rem;width:18px;text-align:center;} ._g5 span{font-size:.88rem;letter-spacing:1px;color:var(--text);} #owner{background:var(--bg2);position:relative;overflow:hidden;} #owner::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(ellipse,rgba(123,47,247,.09),transparent 70%);pointer-events:none;} ._g6{max-width:720px;margin:0 auto;display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:center;padding:50px;background:var(--card);border:1px solid rgba(157,78,255,.18);position:relative;opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s;box-shadow:0 0 60px rgba(123,47,247,.08);} .owner-card._j6{opacity:1;transform:translateY(0);} ._g6::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--purple-dark),var(--magenta),var(--purple-dark));box-shadow:0 0 12px rgba(217,70,239,.5);} ._g7{position:relative;width:160px;height:160px;flex-shrink:0;} ._g8{width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid rgba(157,78,255,.5);position:relative;z-index:1;filter:saturate(1.1);} ._g9{position:absolute;inset:-10px;border-radius:50%;border:1px dashed rgba(157,78,255,.4);animation:rs 10s linear infinite;} ._g9::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;background:var(--magenta);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 10px rgba(217,70,239,.8);} @keyframes rs{from{transform:rotate(0)}to{transform:rotate(360deg)}} ._h1{position:absolute;inset:-22px;border-radius:50%;border:1px solid rgba(123,47,247,.15);} ._h2{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at center,rgba(157,78,255,.2),transparent 70%);animation:gp 3s ease-in-out infinite alternate;} @keyframes gp{0%{opacity:.5}100%{opacity:1}} ._h3{position:absolute;top:-20px;left:50%;transform:translateX(-50%);color:var(--magenta);font-size:1.2rem;filter:drop-shadow(0 0 8px rgba(217,70,239,.8));z-index:2;} ._h4{font-size:.62rem;color:var(--magenta);letter-spacing:5px;text-transform:uppercase;margin-bottom:10px;} ._h5{font-family:'Cinzel',serif;font-size:clamp(1rem,2.5vw,1.35rem);font-weight:700;color:#fff;margin-bottom:18px;line-height:1.4;} ._h5 span{background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1rem;display:block;} ._h6{display:flex;flex-direction:column;gap:10px;} ._h7{display:flex;align-items:center;gap:12px;font-size:.84rem;color:var(--muted);} ._h7 i{color:var(--purple-mid);width:16px;text-align:center;} ._h7 a{color:var(--purple-mid);text-decoration:none;transition:color .3s;} ._h7 a:hover{color:var(--magenta);} #valores{background:var(--bg);} ._h8{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:2px;max-width:1100px;margin:0 auto;} ._h9{background:var(--card);padding:38px 26px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(157,78,255,.08);opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;} .val-card._j6{opacity:1;transform:translateY(0);} ._h9::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(123,47,247,.08),transparent 60%);opacity:0;transition:opacity .4s;} ._h9:hover::after{opacity:1;} ._h9:hover{border-color:rgba(157,78,255,.25);} ._i1{width:68px;height:68px;border:1px solid rgba(157,78,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.45rem;color:var(--magenta);position:relative;z-index:1;transition:all .3s;box-shadow:0 0 16px rgba(217,70,239,.15);} ._h9:hover ._i1{border-color:var(--magenta);transform:scale(1.1) rotate(-5deg);box-shadow:0 0 28px rgba(217,70,239,.4);} ._i2{font-family:'Cinzel',serif;font-size:.95rem;color:#fff;letter-spacing:2px;margin-bottom:10px;position:relative;z-index:1;} ._i3{font-size:.83rem;color:var(--muted);line-height:1.7;position:relative;z-index:1;} #contacto{background:var(--bg2);text-align:center;} ._i4{max-width:700px;margin:0 auto;padding:65px 40px;border:1px solid rgba(157,78,255,.2);position:relative;overflow:hidden;opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s;background:var(--card);box-shadow:0 0 80px rgba(123,47,247,.1);} .cta-box._j6{opacity:1;transform:translateY(0);} ._i4::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(157,78,255,.1),transparent 70%);} ._i4::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--purple-mid),var(--magenta),transparent);box-shadow:0 0 16px rgba(217,70,239,.5);} ._i5{font-family:'Cinzel',serif;font-size:clamp(1.4rem,3.5vw,2.6rem);font-weight:700;color:#fff;margin-bottom:14px;position:relative;} ._i5 span{background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 14px rgba(217,70,239,.5));} ._i6{font-family:'Cormorant Garamond',serif;font-size:1.08rem;color:var(--muted);font-style:italic;margin-bottom:38px;position:relative;} ._i7{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative;} ._i8{background:linear-gradient(135deg,var(--purple-dark),var(--purple),var(--magenta));color:#fff;padding:14px 32px;font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;box-shadow:0 0 20px rgba(123,47,247,.35);} ._i8:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(217,70,239,.55);} ._i9{background:linear-gradient(135deg,#0d6da8,#229ed9);color:#fff;padding:14px 32px;font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:all .3s;box-shadow:0 0 20px rgba(34,158,217,.3);} ._i9:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(34,158,217,.5);} footer{position:relative;z-index:2;background:var(--bg);border-top:1px solid rgba(157,78,255,.12);padding:38px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;} ._j3{font-family:'Cinzel',serif;font-size:1.2rem;font-weight:700;background:linear-gradient(135deg,var(--purple-mid),var(--magenta));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;filter:drop-shadow(0 0 8px rgba(217,70,239,.4));} ._j4{font-size:.72rem;color:var(--muted);letter-spacing:1px;text-align:center;line-height:1.8;} ._j4 a{color:var(--purple-mid);text-decoration:none;} ._j5{display:flex;gap:12px;} ._j5 a{width:36px;height:36px;border:1px solid rgba(157,78,255,.2);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.85rem;text-decoration:none;transition:all .3s;} ._j5 a:hover{border-color:var(--magenta);color:var(--magenta);box-shadow:0 0 14px rgba(217,70,239,.35);} @media(max-width:768px){ nav{padding:14px 20px;} ._b7{display:none;} .nav-links._j7{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(7,2,15,.97);padding:20px;gap:18px;border-bottom:1px solid rgba(157,78,255,.15);} ._b5{display:block;} section{padding:50px 16px;} ._d3{gap:20px;padding:22px 16px;} ._e8{grid-template-columns:1fr;} ._g6{grid-template-columns:1fr;text-align:center;gap:24px;padding:28px 18px;} ._g7{width:110px;height:110px;margin:0 auto;} footer{padding:24px 16px;flex-direction:column;text-align:center;} ._a4{height:min(420px,72vh);} ._b2{height:110px;} ._e3{padding:30px 22px;} ._h9{padding:28px 18px;} ._i1{width:54px;height:54px;font-size:1.2rem;} ._i4{padding:40px 20px;} ._j1,._j2,._i8,._i9{padding:12px 22px;font-size:.8rem;letter-spacing:1.5px;} ._c5{font-size:.58rem;letter-spacing:2px;padding:6px 14px;} ._c8{width:90px;} ._c9{font-size:.9rem;} ._d8{font-size:.6rem;letter-spacing:4px;} ._d8::before,._d8::after{width:24px;} ._e7,._g3,._i6{font-size:.95rem;} ._f1{padding-top:80%;} } @media(max-width:400px){ ._c6{letter-spacing:2px;} ._c7{letter-spacing:2px;font-size:.85rem;} section{padding:40px 14px;} }</style>
 </head>
 <body>
 
-<div id="particles"></div>
+<div id="_a1"></div>
 
-<!-- BOOK INTRO -->
-<div id="book-intro">
-  <div class="book">
-    <div class="page-left">
-      <div class="book-logo">FLOW<br>PERU</div>
-      <div class="book-div"></div>
-      <div class="book-tag">Compra y Vende con Confianza</div>
-      <div class="book-div"></div>
-      <img class="book-img" src="https://i.ibb.co/39DYndWV/IMG-20260320-154537-540.jpg" alt="FlowPeru" />
+
+<div id="_a3">
+  <div class="_a4">
+    <div class="_a5">
+      <div class="_a8">FLOW<br>PERU</div>
+      <div class="_a9"></div>
+      <div class="_b1">Compra y Vende con Confianza</div>
+      <div class="_a9"></div>
+      <img class="_b2" src="https://i.ibb.co/39DYndWV/IMG-20260320-154537-540.jpg" alt="FlowPeru" />
     </div>
-    <div class="page-right">
+    <div class="_a6">
       <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.88rem;color:var(--muted);text-align:center;line-height:1.9;padding:0 8px;position:relative;">
         Un espacio donde las personas compran y venden de manera segura, rápida y eficiente.
       </div>
-      <div class="book-div"></div>
-      <div class="book-row"><i class="fas fa-shield-alt"></i> Compras Seguras</div>
-      <div class="book-row"><i class="fas fa-bolt"></i> Ventas Rápidas</div>
-      <div class="book-row"><i class="fas fa-users"></i> Comunidad Activa</div>
-      <div class="book-row"><i class="fas fa-handshake"></i> Confianza Garantizada</div>
-      <div class="book-div"></div>
+      <div class="_a9"></div>
+      <div class="_b3"><i class="fas fa-shield-alt"></i> Compras Seguras</div>
+      <div class="_b3"><i class="fas fa-bolt"></i> Ventas Rápidas</div>
+      <div class="_b3"><i class="fas fa-users"></i> Comunidad Activa</div>
+      <div class="_b3"><i class="fas fa-handshake"></i> Confianza Garantizada</div>
+      <div class="_a9"></div>
       <div style="font-size:.6rem;color:var(--muted);letter-spacing:3px;text-align:center;position:relative;">PERU &mdash; 2026</div>
     </div>
-    <div class="spine"></div>
+    <div class="_a7"></div>
   </div>
 </div>
 
-<!-- NAV -->
-<nav id="navbar">
-  <div class="nav-brand">FLOWPERU<span>Compra &amp; Vende con Confianza</span></div>
-  <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-  <ul class="nav-links" id="navLinks">
+
+<nav id="_nb">
+  <div class="_b6">FLOWPERU<span>Compra &amp; Vende con Confianza</span></div>
+  <button class="_b5" id="_mt"><i class="fas fa-bars"></i></button>
+  <ul class="_b7" id="_nl">
     <li><a href="#hero">Inicio</a></li>
     <li><a href="#vision-mision">Visión</a></li>
     <li><a href="#quienes-somos">Nosotros</a></li>
     <li><a href="#owner">Fundador</a></li>
     <li><a href="#valores">Valores</a></li>
-    <li><a href="#contacto" class="nav-cta">Unirse</a></li>
+    <li><a href="#contacto" class="_b8">Unirse</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
+
 <section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-ov"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-rays"></div>
-  <div class="hero-content" id="heroContent">
-    <div class="hero-badge"><i class="fas fa-gem"></i> Plataforma de Ventas Premium &mdash; Perú 2026</div>
-    <h1 class="hero-title">FLOWPERU<span>COMPRA &amp; VENDE</span></h1>
-    <p class="hero-sub">Con Confianza &bull; Seguridad &bull; Rapidez</p>
-    <div class="hero-div"></div>
-    <p class="hero-desc">Un grupo líder y confiable donde las personas pueden comprar y vender de manera segura, rápida y eficiente desde Perú.</p>
-    <div class="hero-btns">
-      <a href="https://t.me/FlowPeru" target="_blank" class="btn-p"><i class="fab fa-telegram-plane"></i> Unirme al Grupo</a>
-      <a href="#quienes-somos" class="btn-o"><i class="fas fa-arrow-down"></i> Conocer más</a>
+  <div class="_b9"></div>
+  <div class="_c1"></div>
+  <div class="_c2"></div>
+  <div class="_c3"></div>
+  <div class="_c4" id="_hc">
+    <div class="_c5"><i class="fas fa-gem"></i> Plataforma de Ventas Premium &mdash; Perú 2026</div>
+    <h1 class="_c6">FLOWPERU<span>COMPRA &amp; VENDE</span></h1>
+    <p class="_c7">Con Confianza &bull; Seguridad &bull; Rapidez</p>
+    <div class="_c8"></div>
+    <p class="_c9">Un grupo líder y confiable donde las personas pueden comprar y vender de manera segura, rápida y eficiente desde Perú.</p>
+    <div class="_d1">
+      <a href="https://t.me/FlowPeru" target="_blank" class="_j1"><i class="fab fa-telegram-plane"></i> Unirme al Grupo</a>
+      <a href="#quienes-somos" class="_j2"><i class="fas fa-arrow-down"></i> Conocer más</a>
     </div>
   </div>
-  <div class="hero-scroll"><i class="fas fa-chevron-down"></i><span>Scroll</span></div>
+  <div class="_d2"><i class="fas fa-chevron-down"></i><span>Scroll</span></div>
 </section>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat-item"><div class="stat-n">100%</div><div class="stat-l">Confianza</div></div>
-  <div class="stat-item" style="transition-delay:.1s"><div class="stat-n">24/7</div><div class="stat-l">Disponible</div></div>
-  <div class="stat-item" style="transition-delay:.2s"><div class="stat-n">2026</div><div class="stat-l">Fundado</div></div>
-  <div class="stat-item" style="transition-delay:.3s"><div class="stat-n">PERU</div><div class="stat-l">Origen</div></div>
+
+<div class="_d3">
+  <div class="_d4"><div class="_d5">100%</div><div class="_d6">Confianza</div></div>
+  <div class="_d4" style="transition-delay:.1s"><div class="_d5">24/7</div><div class="_d6">Disponible</div></div>
+  <div class="_d4" style="transition-delay:.2s"><div class="_d5">2026</div><div class="_d6">Fundado</div></div>
+  <div class="_d4" style="transition-delay:.3s"><div class="_d5">PERU</div><div class="_d6">Origen</div></div>
 </div>
 
-<!-- VISION MISION -->
+
 <section id="vision-mision">
-  <div class="sec-hdr">
-    <div class="sec-eye">Nuestra Esencia</div>
-    <h2 class="sec-title">Visión &amp; Misión</h2>
-    <p class="sec-desc">El propósito que nos guía cada día</p>
+  <div class="_d7">
+    <div class="_d8">Nuestra Esencia</div>
+    <h2 class="_d9">Visión &amp; Misión</h2>
+    <p class="_e1">El propósito que nos guía cada día</p>
   </div>
-  <div class="vm-grid">
-    <div class="vm-card">
-      <div class="vm-icon"><i class="fas fa-eye"></i></div>
-      <div class="vm-label">Visión</div>
-      <h3 class="vm-title">Líderes en Confianza</h3>
-      <p class="vm-text">Ser un grupo líder y confiable donde las personas puedan comprar y vender de manera segura, rápida y eficiente, construyendo una comunidad activa con oportunidades de crecimiento para todos.</p>
+  <div class="_e2">
+    <div class="_e3">
+      <div class="_e4"><i class="fas fa-eye"></i></div>
+      <div class="_e5">Visión</div>
+      <h3 class="_e6">Líderes en Confianza</h3>
+      <p class="_e7">Ser un grupo líder y confiable donde las personas puedan comprar y vender de manera segura, rápida y eficiente, construyendo una comunidad activa con oportunidades de crecimiento para todos.</p>
     </div>
-    <div class="vm-card" style="transition-delay:.15s">
-      <div class="vm-icon"><i class="fas fa-bullseye"></i></div>
-      <div class="vm-label">Misión</div>
-      <h3 class="vm-title">Comunidad Activa</h3>
-      <p class="vm-text">Que todos puedan generar ingresos, encontrar buenas ofertas y crecer, manteniendo siempre el respeto, la transparencia y la confianza entre todos los miembros de la comunidad.</p>
+    <div class="_e3" style="transition-delay:.15s">
+      <div class="_e4"><i class="fas fa-bullseye"></i></div>
+      <div class="_e5">Misión</div>
+      <h3 class="_e6">Comunidad Activa</h3>
+      <p class="_e7">Que todos puedan generar ingresos, encontrar buenas ofertas y crecer, manteniendo siempre el respeto, la transparencia y la confianza entre todos los miembros de la comunidad.</p>
     </div>
-    <div class="vm-card" style="transition-delay:.3s">
-      <div class="vm-icon"><i class="fas fa-chart-line"></i></div>
-      <div class="vm-label">Objetivo</div>
-      <h3 class="vm-title">Reconocidos por Calidad</h3>
-      <p class="vm-text">Convertirnos en un espacio reconocido por la calidad de sus servicios y la satisfacción de quienes forman parte de él, siendo el referente número uno en el mercado peruano.</p>
+    <div class="_e3" style="transition-delay:.3s">
+      <div class="_e4"><i class="fas fa-chart-line"></i></div>
+      <div class="_e5">Objetivo</div>
+      <h3 class="_e6">Reconocidos por Calidad</h3>
+      <p class="_e7">Convertirnos en un espacio reconocido por la calidad de sus servicios y la satisfacción de quienes forman parte de él, siendo el referente número uno en el mercado peruano.</p>
     </div>
   </div>
 </section>
 
-<!-- QUIENES SOMOS -->
+
 <section id="quienes-somos">
-  <div class="sec-hdr">
-    <div class="sec-eye">FlowPeru</div>
-    <h2 class="sec-title">¿Quiénes Somos?</h2>
-    <p class="sec-desc">Una comunidad construida sobre confianza y transparencia</p>
+  <div class="_d7">
+    <div class="_d8">FlowPeru</div>
+    <h2 class="_d9">¿Quiénes Somos?</h2>
+    <p class="_e1">Una comunidad construida sobre confianza y transparencia</p>
   </div>
-  <div class="about-wrap">
-    <div class="about-vis">
-      <div class="about-frame">
-        <div class="about-glow"></div>
-        <img class="about-img" src="https://i.ibb.co/39DYndWV/IMG-20260320-154537-540.jpg" alt="FlowPeru" />
-        <div class="about-deco"></div>
-        <div class="about-deco2"></div>
-        <div class="about-badge"><span class="about-badge-n">2026</span><span class="about-badge-t">Fundado</span></div>
+  <div class="_e8">
+    <div class="_e9">
+      <div class="_f1">
+        <div class="_f3"></div>
+        <img class="_f2" src="https://i.ibb.co/39DYndWV/IMG-20260320-154537-540.jpg" alt="FlowPeru" />
+        <div class="_f4"></div>
+        <div class="_f5"></div>
+        <div class="_f6"><span class="_f7">2026</span><span class="_f8">Fundado</span></div>
       </div>
     </div>
-    <div class="about-txt">
-      <div class="about-eye"><i class="fas fa-gem"></i>&nbsp; Nuestra Historia</div>
-      <h2 class="about-tit">La Historia de<br>FlowPeru</h2>
-      <p class="about-body">FlowPeru nació en marzo de 2026 con una misión clara: crear el espacio de compra y venta más confiable del Perú. Somos más que un grupo, somos una comunidad unida por la transparencia y el respeto mutuo.</p>
-      <div class="about-feats">
-        <div class="about-feat"><i class="fas fa-shield-alt"></i><span>Transacciones 100% seguras y verificadas</span></div>
-        <div class="about-feat"><i class="fas fa-users"></i><span>Comunidad activa de compradores y vendedores</span></div>
-        <div class="about-feat"><i class="fas fa-handshake"></i><span>Respeto, transparencia y confianza garantizada</span></div>
-        <div class="about-feat"><i class="fas fa-bolt"></i><span>Proceso de compra rápido y eficiente</span></div>
-        <div class="about-feat"><i class="fas fa-map-marker-alt"></i><span>Desde Perú para toda la comunidad</span></div>
+    <div class="_f9">
+      <div class="_g1"><i class="fas fa-gem"></i>&nbsp; Nuestra Historia</div>
+      <h2 class="_g2">La Historia de<br>FlowPeru</h2>
+      <p class="_g3">FlowPeru nació en marzo de 2026 con una misión clara: crear el espacio de compra y venta más confiable del Perú. Somos más que un grupo, somos una comunidad unida por la transparencia y el respeto mutuo.</p>
+      <div class="_g4">
+        <div class="_g5"><i class="fas fa-shield-alt"></i><span>Transacciones 100% seguras y verificadas</span></div>
+        <div class="_g5"><i class="fas fa-users"></i><span>Comunidad activa de compradores y vendedores</span></div>
+        <div class="_g5"><i class="fas fa-handshake"></i><span>Respeto, transparencia y confianza garantizada</span></div>
+        <div class="_g5"><i class="fas fa-bolt"></i><span>Proceso de compra rápido y eficiente</span></div>
+        <div class="_g5"><i class="fas fa-map-marker-alt"></i><span>Desde Perú para toda la comunidad</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- OWNER -->
+
 <section id="owner">
-  <div class="sec-hdr">
-    <div class="sec-eye">Liderazgo</div>
-    <h2 class="sec-title">Fundador &amp; Dueño</h2>
-    <p class="sec-desc">La mente visionaria detrás de FlowPeru</p>
+  <div class="_d7">
+    <div class="_d8">Liderazgo</div>
+    <h2 class="_d9">Fundador &amp; Dueño</h2>
+    <p class="_e1">La mente visionaria detrás de FlowPeru</p>
   </div>
-  <div class="owner-card">
-    <div class="owner-imgw">
-      <div class="owner-glow"></div>
-      <img class="owner-img" src="https://i.ibb.co/YFBzv2SJ/IMG-20260320-154947-134.jpg" alt="Gabriel FlowPeru" />
-      <div class="owner-ring"></div>
-      <div class="owner-ring2"></div>
-      <div class="owner-crown"><i class="fas fa-crown"></i></div>
+  <div class="_g6">
+    <div class="_g7">
+      <div class="_h2"></div>
+      <img class="_g8" src="https://i.ibb.co/YFBzv2SJ/IMG-20260320-154947-134.jpg" alt="Gabriel FlowPeru" />
+      <div class="_g9"></div>
+      <div class="_h1"></div>
+      <div class="_h3"><i class="fas fa-crown"></i></div>
     </div>
     <div>
-      <div class="owner-role"><i class="fas fa-crown"></i>&nbsp; Fundador &amp; Propietario</div>
-      <div class="owner-name">𝗚𝗔𝗕𝗥𝗜𝗘𝗟<span>𝕱𝖑𝖔𝖜𝕻𝖊𝖗𝖚</span></div>
-      <div class="owner-info">
-        <div class="owner-row"><i class="fab fa-telegram-plane"></i><a href="https://t.me/GabrielPE" target="_blank">@GabrielPE en Telegram</a></div>
-        <div class="owner-row"><i class="fas fa-users"></i><a href="https://t.me/FlowPeru" target="_blank">Grupo: t.me/FlowPeru</a></div>
-        <div class="owner-row"><i class="fas fa-calendar-alt"></i><span>Fundado en Marzo 2026</span></div>
-        <div class="owner-row"><i class="fas fa-map-marker-alt"></i><span>Perú</span></div>
+      <div class="_h4"><i class="fas fa-crown"></i>&nbsp; Fundador &amp; Propietario</div>
+      <div class="_h5">𝗚𝗔𝗕𝗥𝗜𝗘𝗟<span>𝕱𝖑𝖔𝖜𝕻𝖊𝖗𝖚</span></div>
+      <div class="_h6">
+        <div class="_h7"><i class="fab fa-telegram-plane"></i><a href="https://t.me/GabrielPE" target="_blank">@GabrielPE en Telegram</a></div>
+        <div class="_h7"><i class="fas fa-users"></i><a href="https://t.me/FlowPeru" target="_blank">Grupo: t.me/FlowPeru</a></div>
+        <div class="_h7"><i class="fas fa-calendar-alt"></i><span>Fundado en Marzo 2026</span></div>
+        <div class="_h7"><i class="fas fa-map-marker-alt"></i><span>Perú</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- VALORES -->
+
 <section id="valores">
-  <div class="sec-hdr">
-    <div class="sec-eye">Nuestros Pilares</div>
-    <h2 class="sec-title">Valores que nos Definen</h2>
-    <p class="sec-desc">Los principios que guían cada transacción</p>
+  <div class="_d7">
+    <div class="_d8">Nuestros Pilares</div>
+    <h2 class="_d9">Valores que nos Definen</h2>
+    <p class="_e1">Los principios que guían cada transacción</p>
   </div>
-  <div class="vals-grid">
-    <div class="val-card"><div class="val-icon"><i class="fas fa-shield-alt"></i></div><div class="val-name">Seguridad</div><div class="val-desc">Cada transacción está protegida por nuestras políticas para compradores y vendedores.</div></div>
-    <div class="val-card" style="transition-delay:.08s"><div class="val-icon"><i class="fas fa-eye"></i></div><div class="val-name">Transparencia</div><div class="val-desc">Operamos con total honestidad y claridad en cada proceso de la comunidad.</div></div>
-    <div class="val-card" style="transition-delay:.16s"><div class="val-icon"><i class="fas fa-handshake"></i></div><div class="val-name">Confianza</div><div class="val-desc">Relaciones sólidas basadas en el respeto mutuo entre todos los miembros.</div></div>
-    <div class="val-card" style="transition-delay:.24s"><div class="val-icon"><i class="fas fa-rocket"></i></div><div class="val-name">Eficiencia</div><div class="val-desc">Procesos ágiles y rápidos para comprar y vender sin complicaciones.</div></div>
-    <div class="val-card" style="transition-delay:.32s"><div class="val-icon"><i class="fas fa-users"></i></div><div class="val-name">Comunidad</div><div class="val-desc">Una familia activa donde todos crecen y encuentran oportunidades reales.</div></div>
-    <div class="val-card" style="transition-delay:.4s"><div class="val-icon"><i class="fas fa-award"></i></div><div class="val-name">Calidad</div><div class="val-desc">Estándares de excelencia para la máxima satisfacción de nuestros miembros.</div></div>
+  <div class="_h8">
+    <div class="_h9"><div class="_i1"><i class="fas fa-shield-alt"></i></div><div class="_i2">Seguridad</div><div class="_i3">Cada transacción está protegida por nuestras políticas para compradores y vendedores.</div></div>
+    <div class="_h9" style="transition-delay:.08s"><div class="_i1"><i class="fas fa-eye"></i></div><div class="_i2">Transparencia</div><div class="_i3">Operamos con total honestidad y claridad en cada proceso de la comunidad.</div></div>
+    <div class="_h9" style="transition-delay:.16s"><div class="_i1"><i class="fas fa-handshake"></i></div><div class="_i2">Confianza</div><div class="_i3">Relaciones sólidas basadas en el respeto mutuo entre todos los miembros.</div></div>
+    <div class="_h9" style="transition-delay:.24s"><div class="_i1"><i class="fas fa-rocket"></i></div><div class="_i2">Eficiencia</div><div class="_i3">Procesos ágiles y rápidos para comprar y vender sin complicaciones.</div></div>
+    <div class="_h9" style="transition-delay:.32s"><div class="_i1"><i class="fas fa-users"></i></div><div class="_i2">Comunidad</div><div class="_i3">Una familia activa donde todos crecen y encuentran oportunidades reales.</div></div>
+    <div class="_h9" style="transition-delay:.4s"><div class="_i1"><i class="fas fa-award"></i></div><div class="_i2">Calidad</div><div class="_i3">Estándares de excelencia para la máxima satisfacción de nuestros miembros.</div></div>
   </div>
 </section>
 
-<!-- CONTACTO -->
+
 <section id="contacto">
-  <div class="cta-box">
-    <h2 class="cta-title">Únete a <span>FlowPeru</span></h2>
-    <p class="cta-desc">Empieza a comprar y vender con confianza hoy mismo</p>
-    <div class="cta-btns">
-      <a href="https://t.me/FlowPeru" target="_blank" class="btn-tg"><i class="fab fa-telegram-plane"></i> Unirme al Grupo</a>
-      <a href="https://t.me/GabrielPE" target="_blank" class="btn-ow"><i class="fab fa-telegram-plane"></i> Contactar al Owner</a>
+  <div class="_i4">
+    <h2 class="_i5">Únete a <span>FlowPeru</span></h2>
+    <p class="_i6">Empieza a comprar y vender con confianza hoy mismo</p>
+    <div class="_i7">
+      <a href="https://t.me/FlowPeru" target="_blank" class="_i8"><i class="fab fa-telegram-plane"></i> Unirme al Grupo</a>
+      <a href="https://t.me/GabrielPE" target="_blank" class="_i9"><i class="fab fa-telegram-plane"></i> Contactar al Owner</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+
 <footer>
-  <div class="foot-brand">FLOWPERU</div>
-  <div class="foot-info">
+  <div class="_j3">FLOWPERU</div>
+  <div class="_j4">
     &copy; 2026 FlowPeru &mdash; Todos los derechos reservados<br>
     Fundado Marzo 2026 &bull; Perú &bull; <a href="https://t.me/FlowPeru" target="_blank">t.me/FlowPeru</a>
   </div>
-  <div class="foot-soc">
+  <div class="_j5">
     <a href="https://t.me/FlowPeru" target="_blank" title="Grupo Telegram"><i class="fab fa-telegram-plane"></i></a>
     <a href="https://t.me/GabrielPE" target="_blank" title="Owner"><i class="fas fa-crown"></i></a>
   </div>
 </footer>
 
-<script>
-  // Particles
-  const pc = document.getElementById('particles');
-  const cols = ['#9d4eff','#e040fb','#7b2ff7','#ff2d78','#c084fc'];
-  for(let i=0;i<55;i++){
-    const p=document.createElement('div');
-    p.className='particle';
-    const s=1.5+Math.random()*3;
-    const c=cols[Math.floor(Math.random()*cols.length)];
-    p.style.cssText=`left:${Math.random()*100}vw;width:${s}px;height:${s}px;background:${c};animation-duration:${9+Math.random()*14}s;animation-delay:${Math.random()*10}s;box-shadow:0 0 ${s*3}px ${c};`;
-    pc.appendChild(p);
-  }
-
-  // Book open → show page (5 segundos total)
-  setTimeout(()=>{
-    document.getElementById('book-intro').classList.add('fade-out');
-    setTimeout(()=>{
-      document.getElementById('book-intro').style.display='none';
-      document.getElementById('navbar').classList.add('visible');
-      document.getElementById('heroContent').classList.add('visible');
-    },800);
-  },5000);
-
-  // Mobile menu
-  document.getElementById('menuToggle').addEventListener('click',()=>{
-    document.getElementById('navLinks').classList.toggle('open');
-  });
-  document.querySelectorAll('.nav-links a').forEach(a=>{
-    a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'));
-  });
-
-  // Scroll reveals
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
-  },{threshold:.1});
-  document.querySelectorAll('.sec-hdr,.vm-card,.val-card,.stat-item,.about-vis,.about-txt,.owner-card,.cta-box').forEach(el=>obs.observe(el));
-</script>
+<script>var _$=["Ly8gUGFydGljbGVzCiAgY29uc3QgcGMgPSBkb2N1bWVudC5nZX","RFbGVtZW50QnlJZCgnX3gwJyk7CiAgY29uc3QgY29scyA9IFsn","IzlkNGVmZicsJyNlMDQwZmInLCcjN2IyZmY3JywnI2ZmMmQ3OC","csJyNjMDg0ZmMnXTsKICBmb3IobGV0IGk9MDtpPDU1O2krKyl7","CiAgICBjb25zdCBwPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2","RpdicpOwogICAgcC5jbGFzc05hbWU9J19hMic7CiAgICBjb25z","dCBzPTEuNStNYXRoLnJhbmRvbSgpKjM7CiAgICBjb25zdCBjPW","NvbHNbTWF0aC5mbG9vcihNYXRoLnJhbmRvbSgpKmNvbHMubGVu","Z3RoKV07CiAgICBwLnN0eWxlLmNzc1RleHQ9YGxlZnQ6JHtNYX","RoLnJhbmRvbSgpKjEwMH12dzt3aWR0aDoke3N9cHg7aGVpZ2h0","OiR7c31weDtiYWNrZ3JvdW5kOiR7Y307YW5pbWF0aW9uLWR1cm","F0aW9uOiR7OStNYXRoLnJhbmRvbSgpKjE0fXM7YW5pbWF0aW9u","LWRlbGF5OiR7TWF0aC5yYW5kb20oKSoxMH1zO2JveC1zaGFkb3","c6MCAwICR7cyozfXB4ICR7Y307YDsKICAgIHBjLmFwcGVuZENo","aWxkKHApOwogIH0KCiAgLy8gQm9vayBvcGVuIOKGkiBzaG93IH","BhZ2UgKDUgc2VndW5kb3MgdG90YWwpCiAgc2V0VGltZW91dCgo","KT0+ewogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ194MS","cpLmNsYXNzTGlzdC5hZGQoJ19iNCcpOwogICAgc2V0VGltZW91","dCgoKT0+ewogICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZC","gnX3gxJykuc3R5bGUuZGlzcGxheT0nbm9uZSc7CiAgICAgIGRv","Y3VtZW50LmdldEVsZW1lbnRCeUlkKCdfeDInKS5jbGFzc0xpc3","QuYWRkKCdfajYnKTsKICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVu","dEJ5SWQoJ194MycpLmNsYXNzTGlzdC5hZGQoJ19qNicpOwogIC","AgfSw4MDApOwogIH0sNTAwMCk7CgogIC8vIE1vYmlsZSBtZW51","CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ194NCcpLmFkZE","V2ZW50TGlzdGVuZXIoJ2NsaWNrJywoKT0+ewogICAgZG9jdW1l","bnQuZ2V0RWxlbWVudEJ5SWQoJ194NScpLmNsYXNzTGlzdC50b2","dnbGUoJ19qNycpOwogIH0pOwogIGRvY3VtZW50LnF1ZXJ5U2Vs","ZWN0b3JBbGwoJy5fYjcgYScpLmZvckVhY2goYT0+ewogICAgYS","5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsKCk9PmRvY3VtZW50","LmdldEVsZW1lbnRCeUlkKCdfeDUnKS5jbGFzc0xpc3QucmVtb3","ZlKCdfajcnKSk7CiAgfSk7CgogIC8vIFNjcm9sbCByZXZlYWxz","CiAgY29uc3Qgb2JzPW5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlci","hlbnRyaWVzPT57CiAgICBlbnRyaWVzLmZvckVhY2goZT0+e2lm","KGUuaXNJbnRlcnNlY3RpbmcpZS50YXJnZXQuY2xhc3NMaXN0Lm","FkZCgnX2o2Jyk7fSk7CiAgfSx7dGhyZXNob2xkOi4xfSk7CiAg","ZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnLl9kNywuX2UzLC","5faDksLl9kNCwuX2U5LC5fZjksLl9nNiwuX2k0JykuZm9yRWFj","aChlbD0+b2JzLm9ic2VydmUoZWwpKTs="];(new Function(atob(_$.join(""))))();</script>
 </body>
 </html>
